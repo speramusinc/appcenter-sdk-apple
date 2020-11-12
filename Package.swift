@@ -1,4 +1,4 @@
-// swift-tools-version:5.0
+// swift-tools-version:5.3
 
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
@@ -28,7 +28,7 @@ let package = Package(
             targets: ["AppCenterDistribute"])
     ],
     dependencies: [
-        .package(url: "https://github.com/microsoft/plcrashreporter.git", .upToNextMinor(from: "1.8.0")),
+        .package(url: "https://github.com/microsoft/plcrashreporter.git", .branch("v-ankubo/update-swift-version")),
     ],
     targets: [
         .target(

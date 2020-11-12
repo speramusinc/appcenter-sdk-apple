@@ -7,6 +7,7 @@ import PackageDescription
 
 let package = Package(
     name: "App Center",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v9),
         .macOS(.v10_10),
@@ -20,7 +21,11 @@ let package = Package(
         .library(
             name: "AppCenterCrashes",
             type: .static,
-            targets: ["AppCenterCrashes"])
+            targets: ["AppCenterCrashes"]),
+        .library(
+            name: "AppCenterDistribute",
+            type: .static,
+            targets: ["AppCenterDistribute"])
     ],
     dependencies: [
         .package(url: "https://github.com/microsoft/plcrashreporter.git", .upToNextMinor(from: "1.8.0")),
@@ -73,6 +78,23 @@ let package = Package(
                 .linkedFramework("Foundation"),
                 .linkedFramework("UIKit", .when(platforms: [.iOS, .tvOS])),
                 .linkedFramework("AppKit", .when(platforms: [.macOS])),
+            ]
+        ),
+        .target(
+            name: "AppCenterDistribute",
+            dependencies: ["AppCenter"],
+            path: "AppCenterDistribute/AppCenterDistribute",
+            exclude: ["Support"],
+            resources: [
+                .process("Resources/AppCenterDistribute.strings")
+            ],
+            cSettings: [
+                .headerSearchPath("**"),
+                .headerSearchPath("../../AppCenter/AppCenter/**"),
+            ],
+            linkerSettings: [
+                .linkedFramework("Foundation"),
+                .linkedFramework("UIKit", .when(platforms: [.iOS])),
             ]
         )
     ]
